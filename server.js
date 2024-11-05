@@ -18,8 +18,8 @@ const client = twilio(accountSid, authToken);
 let phoneNumber; // to store the recipient's phone number
 
 // SSL Certificates
-const privateKey = fs.readFileSync('./certificates/key.pem', 'utf8');
-const certificate = fs.readFileSync('./certificates/cert.pem', 'utf8');
+// const privateKey = fs.readFileSync('./certificates/key.pem', 'utf8');
+// const certificate = fs.readFileSync('./certificates/cert.pem', 'utf8');
 
 // Call the function with your Application SID and the new Voice URL
 const appSid = 'your_twiml_app_sid'; // Replace with your TwiML App SID
@@ -98,16 +98,16 @@ app.get('/', (req, res) => {
 });
 
 // Create HTTPS server
-const httpsServer = https.createServer(
-  {
-    key: privateKey,
-    cert: certificate,
-  },
-  app
-);
+// const httpsServer = https.createServer(
+//   {
+//     key: privateKey,
+//     cert: certificate,
+//   },
+//   app
+// );
 
 // Start the server
 const PORT = 3000;
-httpsServer.listen(PORT, () => {
-  console.log(`HTTPS server listening on port ${PORT}`);
+app.listen(PORT, () => {
+  console.log(`HTTP server listening on port ${PORT}`);
 });
