@@ -85,6 +85,8 @@ app.post('/makeCall', (req, res) => {
 
   // Generate TwiML response for the call
   const twiml = new twilio.twiml.VoiceResponse();
+  
+  const start = twiml.start();
   start.stream({
     url: websocketURL, // WebSocket URL where the audio stream will be sent
     name: 'Call Audio Stream',
