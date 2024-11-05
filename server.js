@@ -14,6 +14,7 @@ const authToken = process.env.TWILIO_AUTH_TOKEN;
 const twilioPhoneNumber = process.env.TWILIO_PHONE_NUMBER;
 const twimlAppSid = process.env.TWILIO_TWIML_APP_SID; // Load Application SID
 const client = twilio(accountSid, authToken);
+const websocketURL = process.env.WS_URL;
 
 let phoneNumber; // to store the recipient's phone number
 
@@ -22,9 +23,6 @@ let phoneNumber; // to store the recipient's phone number
 // const certificate = fs.readFileSync('./certificates/cert.pem', 'utf8');
 
 // Call the function with your Application SID and the new Voice URL
-const appSid = 'your_twiml_app_sid'; // Replace with your TwiML App SID
-// const newVoiceUrl = 'https://192.168.5.31/makeCall'; // Replace with your new Voice URL
-// const newVoiceUrl = `${window.location.protocol}//${window.location.host}/makeCall`;
 const newVoiceUrl = `${process.env.BASE_URL}/makeCall`;
 
 // Middleware
@@ -87,6 +85,11 @@ app.post('/makeCall', (req, res) => {
 
   // Generate TwiML response for the call
   const twiml = new twilio.twiml.VoiceResponse();
+  start.stream({
+    url: websocketURL, // WebSocket URL where the audio stream will be sent
+    name: 'Call Audio Stream',
+    track: 'both_tracks' // Stream both inbound and outbound audio
+  });
   twiml.dial({ callerId: twilioPhoneNumber }, phoneNumber);
 
   // Send TwiML response as XML to Twilio
