@@ -24,7 +24,8 @@ let phoneNumber; // to store the recipient's phone number
 // Call the function with your Application SID and the new Voice URL
 const appSid = 'your_twiml_app_sid'; // Replace with your TwiML App SID
 // const newVoiceUrl = 'https://192.168.5.31/makeCall'; // Replace with your new Voice URL
-const newVoiceUrl = `${window.location.protocol}//${window.location.host}/makeCall`;
+// const newVoiceUrl = `${window.location.protocol}//${window.location.host}/makeCall`;
+const newVoiceUrl = `${process.env.BASE_URL}/makeCall`;
 
 // Middleware
 app.use(helmet());
@@ -46,7 +47,7 @@ async function updateVoiceUrl(appSid, newVoiceUrl) {
 
 // Endpoint to generate Twilio token
 app.get('/token', (req, res) => {
-  
+
   updateVoiceUrl(twimlAppSid, newVoiceUrl);
 
   const capability = new twilio.jwt.ClientCapability({
