@@ -90,7 +90,7 @@ app.post('/makeCall', (req, res) => {
   start.stream({
     url: websocketURL, // WebSocket URL where the audio stream will be sent
     name: 'Call Audio Stream',
-    track: 'outbound' // Stream both inbound and outbound audio
+    track: 'both_track' // Stream both inbound and outbound audio
   });
   twiml.dial({ callerId: twilioPhoneNumber }, phoneNumber);
 
