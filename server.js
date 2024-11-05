@@ -27,7 +27,7 @@ const newVoiceUrl = `${process.env.BASE_URL}/makeCall`;
 
 // Middleware
 app.use(helmet());
-app.use(cors({ origin: 'http://127.0.0.1:5500' })); // adjust origin as needed
+app.use(cors({ origin: process.env.CORS_ORIGIN })); // adjust origin as needed
 app.use(express.json());
 
 // Function to update the Voice URL
@@ -85,12 +85,12 @@ app.post('/makeCall', (req, res) => {
 
   // Generate TwiML response for the call
   const twiml = new twilio.twiml.VoiceResponse();
-  
+
   const start = twiml.start();
   start.stream({
     url: websocketURL, // WebSocket URL where the audio stream will be sent
     name: 'Call Audio Stream',
-    track: 'both_tracks' // Stream both inbound and outbound audio
+    track: 'inbound' // Stream both inbound and outbound audio
   });
   twiml.dial({ callerId: twilioPhoneNumber }, phoneNumber);
 
