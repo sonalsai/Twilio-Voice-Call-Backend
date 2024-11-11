@@ -27,7 +27,7 @@ const newVoiceUrl = `${process.env.BASE_URL}/makeCall`;
 
 // Middleware
 app.use(helmet());
-app.use(cors({ origin: process.env.CORS_ORIGIN })); // adjust origin as needed
+app.use(cors()); // adjust origin as needed
 app.use(express.json());
 
 // Function to update the Voice URL
