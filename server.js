@@ -66,6 +66,7 @@ app.get('/token', (req, res) => {
 // Initiate call using TwiML
 app.post('/makeCall', (req, res) => {
   const phoneNumber = req.body.phoneNumber;
+  console.log("Phone Number > ",phoneNumber)
   if (!phoneNumber) {
     return res.status(400).send('Phone number is required.');
   }
