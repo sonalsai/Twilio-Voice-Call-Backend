@@ -16,12 +16,6 @@ const twimlAppSid = process.env.TWILIO_TWIML_APP_SID; // Load Application SID
 const client = twilio(accountSid, authToken);
 const websocketURL = process.env.WS_URL;
 
-let phoneNumber; // to store the recipient's phone number
-
-// SSL Certificates
-// const privateKey = fs.readFileSync('./certificates/key.pem', 'utf8');
-// const certificate = fs.readFileSync('./certificates/cert.pem', 'utf8');
-
 // Call the function with your Application SID and the new Voice URL
 const newVoiceUrl = `${process.env.BASE_URL}/makeCall`;
 
@@ -69,16 +63,9 @@ app.get('/token', (req, res) => {
   res.json({ token });
 });
 
-// Store phone number from the client
-app.post('/getNum', (req, res) => {
-  const { number } = req.body;
-  phoneNumber = number;
-  res.json({ status: "Number received" });
-});
-
 // Initiate call using TwiML
 app.post('/makeCall', (req, res) => {
-
+  const phoneNumber = req.body.phoneNumber;
   if (!phoneNumber) {
     return res.status(400).send('Phone number is required.');
   }
@@ -103,15 +90,6 @@ app.post('/makeCall', (req, res) => {
 app.get('/', (req, res) => {
   res.send('Twilio Browser-to-Phone Call Service');
 });
-
-// Create HTTPS server
-// const httpsServer = https.createServer(
-//   {
-//     key: privateKey,
-//     cert: certificate,
-//   },
-//   app
-// );
 
 // Start the server
 const PORT = 3000;
